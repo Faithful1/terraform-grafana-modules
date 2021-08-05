@@ -5,8 +5,8 @@ resource "docker_container" "nodered_container" {
     internal = var.int_port_in
     external = var.ext_port_in
   }
-  volumes {
-    host_path      = var.host_path_in
-    container_path = var.container_path_in
-  }
+  # volumes {
+  #   host_path      = var.host_path_in
+  #   container_path = var.container_path_in
+  # }
 }

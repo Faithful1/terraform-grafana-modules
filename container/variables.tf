@@ -14,10 +14,10 @@ variable "ext_port_in" {
   description = "name of image"
 }
 
-variable "host_path_in" {
-  description = "name of image"
-}
+# variable "host_path_in" {
+#   description = "name of image"
+# }
 
-variable "container_path_in" {
-  description = "name of image"
-}
+# variable "container_path_in" {
+#   description = "name of image"
+# }

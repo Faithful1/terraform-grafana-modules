@@ -1,11 +1,11 @@
 # output the IP address of the container
 output "container-ip-address" {
-  value       = [for i in docker_container.nodered_container[*] : join(":", [i.ip_address], i.ports[*]["external"])]
+  value       = module.container[*].container-ip-address
   description = "The ip address of the container"
 }
 
 output "container-name" {
-  value       = docker_container.nodered_container[*].name
+  value       = flatten(module.container[*].container-name)
   description = "The name of the nodered container"
 }
 

@@ -1,26 +1,20 @@
 locals {
   deployment = {
     nodered = {
-      image          = var.image["nodered"][terraform.workspace]
-      int            = 1880
-      ext            = var.ext_port["nodered"][terraform.workspace]
-      container_path = "/data"
+      container_count = length(var.ext_port["nodered"][terraform.workspace])
+      image           = var.image["nodered"][terraform.workspace]
+      int             = 1880
+      ext             = var.ext_port["nodered"][terraform.workspace]
+      container_path  = "/data"
     }
     influxdb = {
+     container_count = length(var.ext_port["influxdb"][terraform.workspace])
       image          = var.image["influxdb"][terraform.workspace]
       int            = 8086
       ext            = var.ext_port["influxdb"][terraform.workspace]
       container_path = "/var/lib/influxdb"
     }
   }
-}
-
-# generate random string
-resource "random_string" "random" {
-  for_each = local.deployment
-  length   = 4
-  special  = false
-  upper    = false
 }
 
 module "image" {
@@ -32,10 +26,11 @@ module "image" {
 module "container" {
   source            = "./container"
   for_each          = local.deployment
-  name_in           = join("-", [each.key, terraform.workspace, random_string.random[each.key].result])
+  count_in          = each.value.container_count
+  name_in           = each.key
   image_in          = module.image[each.key].image_out
   int_port_in       = each.value.int
-  ext_port_in       = each.value.ext[0]
+  ext_port_in       = each.value.ext
   container_path_in = each.value.container_path
   #   count             = local.container_count // cant use count where there is for_each
   #   ext_port_in       = var.ext_port[terraform.workspace][count.index]

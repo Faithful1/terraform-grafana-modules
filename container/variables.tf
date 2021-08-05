@@ -17,3 +17,7 @@ variable "ext_port_in" {
 variable "container_path_in" {
   description = "name of image"
 }
+
+variable "count_in" {
+
+}

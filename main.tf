@@ -1,3 +1,3 @@
 module "image" {
-    source = "./image" 
+    source = "./image/"
 }

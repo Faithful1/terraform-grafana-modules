@@ -14,8 +14,11 @@ variable "image" {
 }
 
 variable "ext_port" {
-  type = map
-
+  type = map(any)
+  default = {
+    dev  = [1980, 1981]
+    prod = [1880, 1881]
+  }
   validation {
     condition     = max(var.ext_port["dev"]...) <= 65535 && min(var.ext_port["dev"]...) >= 1980
     error_message = "The external port must be valid port range 0 - 65535."
@@ -27,13 +30,15 @@ variable "ext_port" {
   }
 }
 
-locals {
-  container_count = length(var.ext_port[terraform.workspace])
-  # container_count = length(lookup(var.ext_port, var.env))
-}
+
+# locals {
+#   container_count = length(var.ext_port[terraform.workspace])
+#   # container_count = length(lookup(var.ext_port, var.env))
+# }
 
 variable "int_port" {
-  type = number
+  type    = number
+  default = 1880
 
   # validation {
   #   condition = var.int_port == 1880

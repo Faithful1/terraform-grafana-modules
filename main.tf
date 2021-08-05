@@ -12,7 +12,7 @@ module "container" {
   image_in          = module.image[each.key].image_out
   int_port_in       = each.value.int
   ext_port_in       = each.value.ext
-  container_path_in = each.value.container_path
+  volumes_in = each.value.volumes
   #   count             = local.container_count // cant use count where there is for_each
   #   ext_port_in       = var.ext_port[terraform.workspace][count.index]
 }

@@ -14,10 +14,15 @@ variable "ext_port_in" {
   description = "name of image"
 }
 
-variable "container_path_in" {
-  description = "name of image"
-}
+# variable "container_path_in" {
+#   description = "name of image"
+# }
 
 variable "count_in" {
+  description = "name of count_in"
 
+}
+
+variable "volumes_in" {
+  description = "name of image"
 }

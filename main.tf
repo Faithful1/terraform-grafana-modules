@@ -19,5 +19,4 @@ module "container" {
     int_port_in = var.int_port
     ext_port_in = var.ext_port[terraform.workspace][count.index]
     container_path_in = "/data"
-    #   host_path_in      = "${path.cwd}/noderedvol"
 }

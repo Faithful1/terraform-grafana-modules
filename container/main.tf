@@ -1,9 +1,9 @@
 # generate random string
 resource "random_string" "random" {
-  count    = var.count_in
-  length   = 4
-  special  = false
-  upper    = false
+  count   = var.count_in
+  length  = 4
+  special = false
+  upper   = false
 }
 
 resource "docker_container" "app_container" {

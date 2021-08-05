@@ -25,7 +25,19 @@ resource "docker_container" "app_container" {
 resource "docker_volume" "container_volume" {
   count = var.count_in
   name  = "${var.name_in}-${random_string.random[count.index].result}volume"
-  # lifecycle {
-  #   prevent_destroy = true
-  # }
+  lifecycle {
+    prevent_destroy = true
+  }
+  // create a backup folder for the volume
+  provisioner "local-exec" {
+    when = destroy
+    command = "mkdir ${path.cwd}/../backup/"
+    on_failure = continue
+  }
+
+  provisioner "local-exec" {
+    when = destroy
+    command = "sudo tar -czvf ${path.cwd}/../backup/${self.name}.tar.gz ${self.mountpoint}/"
+    on_failure = continue
+  }
 }
